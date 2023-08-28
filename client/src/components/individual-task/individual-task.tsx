@@ -5,6 +5,7 @@ interface TaskComponentProps {
   taskId: string | null;
   onClose: () => void;
   onSave: () => void;
+  updateTaskInTasks: (updatedTask: Task) => void; // Correctly typed function prop
 }
 
 interface Task {
@@ -14,7 +15,7 @@ interface Task {
   status: string;
 }
 
-const TaskComponent: React.FC<TaskComponentProps> = ({ taskId, onClose }) => {
+const TaskComponent: React.FC<TaskComponentProps> = ({ taskId, onClose, updateTaskInTasks }) => {
   const [isFormVisible, setIsFormVisible] = useState(true);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
@@ -30,7 +31,7 @@ const TaskComponent: React.FC<TaskComponentProps> = ({ taskId, onClose }) => {
     };
 
     fetchTaskDetails();
-  }, [taskId]); // Fetch task details when the taskId changes
+  }, [taskId]);
 
   const handleCloseForm = () => {
     setIsFormVisible(false);
@@ -48,8 +49,10 @@ const TaskComponent: React.FC<TaskComponentProps> = ({ taskId, onClose }) => {
           showToolbar
           initialTitle={selectedTask.title}
           initialDescription={selectedTask.description}
-          isEditMode= {Boolean(taskId)}
+          isEditMode={Boolean(taskId)}
           taskId={taskId}
+          updateTaskInTasks={updateTaskInTasks}
+          onTaskAdded={() => {}}
         />
       )}
     </div>

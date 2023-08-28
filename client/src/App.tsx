@@ -27,6 +27,8 @@ const App = () => {
               initialDescription=''
               taskId={null}
               isEditMode={false}
+              updateTaskInTasks={() => {}}
+              onTaskAdded={() => {}}
             />
           }
         />
@@ -36,6 +38,7 @@ const App = () => {
             onSave={() => {}}
             taskId=''
             onClose={()=> {}}
+            updateTaskInTasks={() => {}}
             />}
         />
       </Routes>

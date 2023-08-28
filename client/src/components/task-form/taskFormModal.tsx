@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import './taskFormModal.css';
 import { FiX, FiTrash2 } from 'react-icons/fi';
 
+interface Task {
+  _id: string;
+  title: string;
+  status: string;
+  description: string;
+}
+
 interface TaskFormProps {
   isVisible: boolean;
   onClose: () => void;
@@ -12,6 +19,8 @@ interface TaskFormProps {
   initialDescription: string;
   isEditMode: boolean;
   taskId: string | null;
+  updateTaskInTasks: (updatedTask: Task) => void;
+  onTaskAdded: () => void;
 }
 
 const TaskFormModal: React.FC<TaskFormProps> = ({
@@ -24,6 +33,8 @@ const TaskFormModal: React.FC<TaskFormProps> = ({
   initialDescription,
   isEditMode,
   taskId,
+  updateTaskInTasks,
+  onTaskAdded
 }) => {
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
@@ -34,10 +45,8 @@ const TaskFormModal: React.FC<TaskFormProps> = ({
       setIsEmptyWarningVisible(true);
       return;
     }
-
     try {
       if (isEditMode) {
-        console.log('Status prop:', status);
         const response = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
           method: 'PUT',
           headers: {
@@ -49,6 +58,12 @@ const TaskFormModal: React.FC<TaskFormProps> = ({
         if (response.ok) {
           console.log('Task updated successfully');
           onClose();
+          updateTaskInTasks({
+            _id: taskId!,
+            title,
+            description,
+            status,
+          });
         } else {
           console.error('Failed to update task');
         }
@@ -66,6 +81,8 @@ const TaskFormModal: React.FC<TaskFormProps> = ({
         if (response.ok) {
           onSave(title, description, status);
           onClose();
+          onTaskAdded()
+          
         } else {
           console.error('Error saving task:', response.statusText);
         }
@@ -89,6 +106,13 @@ const TaskFormModal: React.FC<TaskFormProps> = ({
       if (response.ok) {
         console.log('Task deleted successfully');
         onClose();
+        updateTaskInTasks({
+          _id: taskId!,
+          title: '',
+          description: '',
+          status: '',
+        });
+
       } else {
         console.error('Failed to delete task');
       }

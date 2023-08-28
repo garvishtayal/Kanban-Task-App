@@ -6,8 +6,7 @@ import TaskComponent from '../individual-task/individual-task';
 interface Task {
   _id: string;
   title: string;
-  status: 'To Do' | 'Doing' | 'Done';
-  index: number;
+  status: string;
 }
 
 const Home: React.FC<{ status: string; setStatus: (status: string) => void }> = () => {
@@ -17,25 +16,25 @@ const Home: React.FC<{ status: string; setStatus: (status: string) => void }> = 
   const [modalStatus, setModalStatus] = useState<'To Do' | 'Doing' | 'Done' | ''>('');
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchTasks() {
-      try {
-        const response = await fetch('http://localhost:3001/api/tasks', {
-          method: 'GET',
-        });
-        const data = await response.json();
+  async function fetchTasks() {
+    try {
+      const response = await fetch('http://localhost:3001/api/tasks', {
+        method: 'GET',
+      });
+      const data = await response.json();
 
-        const tasksWithIndex = data.map((task: Task, index: number) => ({
-          ...task,
-          index,
-        }));
+      const tasksWithIndex = data.map((task: Task, index: number) => ({
+        ...task,
+        index,
+      }));
 
-        setTasks(tasksWithIndex);
-      } catch (error) {
-        console.error('Error fetching tasks:', error);
-      }
+      setTasks(tasksWithIndex);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
     }
+  }
 
+  useEffect(() => {
     fetchTasks();
   }, []);
 
@@ -82,6 +81,18 @@ const Home: React.FC<{ status: string; setStatus: (status: string) => void }> = 
     setTasks(updatedTasks);
   };
 
+  const updateTaskInTasks = (updatedTask: Task) => {
+    setTasks(prevTasks => {
+      const updatedTasks = prevTasks.map(task => {
+        if (task._id === updatedTask._id) {
+          return updatedTask;
+        }
+        return task;
+      });
+      return updatedTasks;
+    });
+  };
+
   const renderTasks = (status: Task['status']) => {
     const filteredTasks = tasks.filter(task => task.status === status);
 
@@ -120,44 +131,38 @@ const Home: React.FC<{ status: string; setStatus: (status: string) => void }> = 
       <div className="column todo">
         <h2>To Do</h2>
         <ul>{renderTasks('To Do')}</ul>
-        <ul>
           <button className='add-task' onClick={() => {
             setIsFormVisible(true);
             setModalStatus('To Do');
           }}>
             + Add Task
           </button>
-        </ul>
       </div>
       <div className="column doing">
         <h2>Doing</h2>
         <ul>{renderTasks('Doing')}</ul>
-        <ul>
           <button className='add-task' onClick={() => {
             setIsFormVisible(true);
             setModalStatus('Doing');
           }}>
             + Add Task
           </button>
-        </ul>
       </div>
       <div className="column done">
         <h2>Done</h2>
         <ul>{renderTasks('Done')}</ul>
-        <ul>
           <button className='add-task' onClick={() => {
             setIsFormVisible(true);
             setModalStatus('Done');
           }}>
             + Add Task
           </button>
-        </ul>
       </div>
 
       {/* Render the form modal overlay conditionally */}
       {isFormVisible && (
         <div className="modal-overlay">
-          <div className="task-form-container">
+          <div className="task-form-container" onClick={e => e.stopPropagation()}>
             <TaskFormModal
               isVisible={isFormVisible}
               onClose={() => setIsFormVisible(false)}
@@ -171,6 +176,8 @@ const Home: React.FC<{ status: string; setStatus: (status: string) => void }> = 
               initialDescription=''
               taskId={null}
               isEditMode={false}
+              updateTaskInTasks={updateTaskInTasks}
+              onTaskAdded={fetchTasks}
             />
           </div>
         </div>
@@ -184,6 +191,7 @@ const Home: React.FC<{ status: string; setStatus: (status: string) => void }> = 
               onSave={() => setIsVisible(false)}
               taskId={selectedTaskId}
               onClose={() => setIsVisible(false)}
+              updateTaskInTasks={updateTaskInTasks}
             />
           </div>
         </div>
