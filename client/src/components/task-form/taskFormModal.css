@@ -1,0 +1,144 @@
+/* TaskFormModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background-color: #222;
+  border-radius: 10px;
+  padding: 30px;
+  width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  color: #ddd;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  border-radius: 100px;
+  padding-top: 6px;
+}
+
+.close-button:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.411);
+}
+
+.modal-icons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #aaa;
+  margin-left: 10px;
+  transition: color 0.3s ease;
+}
+
+.icon-button:hover {
+  color: red;
+}
+
+.modal-body label {
+  font-size: 16px;
+  color: #ddd;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.modal-body input,
+.modal-body textarea {
+  background-color: #333;
+  border: none;
+  color: #fff;
+  padding: 12px;
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.modal-body textarea {
+  resize: vertical;
+}
+
+.save-button {
+  background-color: #ff8a65;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #ff7043;
+}
+
+
+
+/* For Warning Message */
+.warning-message {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: calc(100% - 40px);
+  background-color: rgba(255, 0, 0, 0.9);
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: fadeInUp 0.3s ease;
+}
+
+.warning-content {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.close-warning-button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
