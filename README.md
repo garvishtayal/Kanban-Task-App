@@ -5,6 +5,9 @@ A Task-Manager Website to Manage your Daily tasks Seamlessly.
 
 ![img](https://i.ibb.co/w4HSc9F/task-1.png)
 
+## Live Demo
+Save Your Time  : <a href="https://kaleidoscopic-daffodil-52fc4e.netlify.app/" target="blank"> Click Here</a>
+
 ## Technologies Used
 
 - Frontend: React + TypeScript
