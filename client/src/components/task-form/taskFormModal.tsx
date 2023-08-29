@@ -157,7 +157,7 @@ const TaskFormModal: React.FC<TaskFormProps> = ({
               </button>
             </div>
           )}
-          <form>
+          <form onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="title">Title:</label>
             <input
               type="text"
