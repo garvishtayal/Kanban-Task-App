@@ -1,6 +1,7 @@
+require('dotenv').config(); // Load environment variables from .env file
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://garvishtayal:X80ygcBSAWP4v0h8@cluster0.lhnyt6g.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
