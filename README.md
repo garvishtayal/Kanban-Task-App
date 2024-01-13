@@ -6,7 +6,7 @@ A Task-Manager Website to Manage your Daily tasks Seamlessly.
 ![img](https://i.ibb.co/w4HSc9F/task-1.png)
 
 ## Live Demo
-Save Your Time  : <a href="https://kanban-taskapp.netlify.app/" target="blank"> Click Here</a>
+Save Your Time: [Click Here](https://kanban-taskapp.netlify.app/)
 
 ## Technologies Used
 
